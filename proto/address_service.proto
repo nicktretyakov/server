@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "address.proto";
+import "google/protobuf/empty.proto";
+import "user.proto";
+
+service AddressService {
+    rpc AddAttachment (CreateAttachmentRequest) returns (CreateAttachmentResponse) {}
+    rpc RemoveAttachment (RemoveAttachmentRequest) returns (google.protobuf.Empty) {}
+    rpc RenameAttachment (RenameAttachmentRequest) returns (CreateAttachmentResponse) {}
+    rpc AddLink (AddLinkRequest) returns (AddLinkResponse) {}
+    rpc UpdateLink (UpdateLinkRequest) returns (UpdateLinkResponse) {}
+    rpc RemoveLink(RemoveLinkRequest) returns (google.protobuf.Empty) {}
+    rpc AddParticipant(AddParticipantRequest) returns (AddParticipantResponse) {}
+    rpc UpdateParticipant(UpdateParticipantRequest) returns (UpdateParticipantResponse) {}
+    rpc RemoveParticipant(RemoveParticipantRequest) returns (google.protobuf.Empty) {}
+}
+
+message CreateAttachmentRequest {
+    string addressID = 1;
+    string attachmentURL = 2;
+    string fileName = 3;
+    string mime = 4;
+    AddressType addressType = 5;
+}
+
+message CreateAttachmentResponse {
+    Attachment attachment = 1;
+}
+
+message RemoveAttachmentRequest {
+    string attachment_id = 1;
+    AddressType addressType = 2;
+}
+
+message RenameAttachmentRequest {
+    string attachment_id = 1;
+    string fileName = 2;
+    AddressType addressType = 3;
+}
+
+message AddLinkRequest {
+    string name = 1;
+    string source = 2;
+    string addressID = 3;
+    AddressType addressType = 4;
+}
+
+message AddLinkResponse {
+    Link link = 1;
+}
+
+message RemoveLinkRequest {
+    string addressID = 1;
+    string linkId = 2;
+    AddressType addressType = 3;
+}
+
+message UpdateLinkRequest {
+    string addressID = 1;
+    Link link = 2;
+    AddressType addressType = 3;
+}
+
+message UpdateLinkResponse {
+  Link link = 1;
+}
+
+message AddParticipantRequest {
+    string addressID = 1;
+    uint32 portalCodeParticipant =  2;
+    string role = 3;
+    AddressType addressType = 4;
+}
+
+message AddParticipantResponse {
+    Participant participant = 1;
+}
+
+message UpdateParticipantRequest {
+    string addressID = 1;
+    uint32 portalCodeParticipantBase =  2;
+    uint32 portalCodeParticipantChange =  3;
+    string role = 4;
+    AddressType addressType = 5;
+}
+
+message UpdateParticipantResponse {
+    Participant participant = 1;
+}
+
+message RemoveParticipantRequest {
+    uint32 portalCodeParticipant = 1;
+    string address_id = 2;
+    AddressType addressType = 3;
+}

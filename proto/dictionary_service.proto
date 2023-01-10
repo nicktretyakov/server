@@ -1,0 +1,29 @@
+syntax = "proto3";
+package booking;
+option go_package = "./;proto";
+import "google/protobuf/empty.proto";
+
+
+service DictionaryService {
+  rpc DepartmentList(google.protobuf.Empty) returns (DepartmentListResponse){}
+}
+
+message DepartmentListResponse {
+  repeated Department departments = 1;
+}
+
+message Department {
+  string id = 1;
+  string name = 2;
+}
+
+message Notification {
+  Status status_code = 1;
+  uint64 units = 2; // Цифры до запятой
+  uint32 fragments = 3; // Цифры после запятой 
+}
+
+enum Status {
+  UNKNOWN_STATUS = 0;
+  DEl = 1;
+}

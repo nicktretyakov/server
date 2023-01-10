@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "user.proto";
+
+service EmployeeService {
+  // получение списка всех сотрудников тн
+  rpc SuggestEmployee (SuggestEmployeeRequest) returns (SuggestEmployeeResponse) {}
+}
+message SuggestEmployeeRequest {
+  string query = 1;
+  uint64 offset = 2;
+  uint64 limit = 3;
+}
+
+message SuggestEmployeeResponse {
+  repeated Employee employees = 1;
+}

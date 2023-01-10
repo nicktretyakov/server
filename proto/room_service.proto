@@ -1,0 +1,192 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "room.proto";
+import "address.proto";
+import "google/protobuf/empty.proto";
+
+service RoomService {
+  rpc CreateInitialRoom (CreateInitialRoomRequest) returns (CreateInitialRoomResponse) {}
+  rpc UpdateRoom (UpdateRoomRequest) returns (UpdateRoomResponse) {}
+  rpc AddRoomSlots (AddRoomSlotsRequest) returns (AddRoomSlotsResponse) {}
+  rpc AddRoomEquipments (AddRoomEquipmentsRequest) returns (AddRoomEquipmentsResponse) {}
+  rpc UpdateRoomSlot (UpdateRoomSlotRequest) returns (UpdateRoomSlotResponse) {}
+  rpc UpdateRoomEquipment (UpdateRoomEquipmentRequest) returns (UpdateRoomEquipmentResponse) {}
+  rpc RemoveRoomSlot (RemoveRoomSlotRequest) returns (google.protobuf.Empty) {}
+  rpc RemoveRoomEquipment (RemoveRoomEquipmentRequest) returns (google.protobuf.Empty) {}
+  rpc GetRooms (GetRoomsRequest) returns (GetRoomsResponse) {}
+  rpc GetArchivedRooms (GetRoomsRequest) returns (GetRoomsResponse) {}
+  rpc GetRoom (GetRoomRequest) returns (GetRoomResponse) {}
+  rpc AddRelease (AddReleaseRequest) returns (AddReleaseResponse) {}
+  rpc UpdateRelease (UpdateReleaseRequest) returns (UpdateReleaseResponse) {}
+  rpc RemoveRelease (RemoveReleaseRequest) returns (google.protobuf.Empty) {}
+  rpc ChangeRoomStatus (ChangeRoomStatusRequest) returns (GetRoomResponse) {}
+  rpc PrepareReportData (PrepareReportDataRequest) returns(PrepareReportDataResponse) {}
+  rpc SetRoomArchived (SetRoomArchivedRequest) returns (google.protobuf.Empty) {}
+  rpc SetRoomPublished (SetRoomPublishedRequest) returns (google.protobuf.Empty) {}
+}
+
+message CreateInitialRoomRequest {
+  string title = 1;
+  string description = 2;
+  string creationDate = 3;
+  uint32 portalCodeOwner =  4;
+  uint32 portalCodeAssignee =  5;
+  string targetAudience = 6;
+  repeated string equipments = 7;
+  repeated string slots = 8;
+  repeated string bookingIDs = 9;
+}
+
+message CreateInitialRoomResponse {
+  Room room = 1;
+}
+
+message UpdateRoomRequest {
+  string uuid = 1;
+  string title = 2;
+  string description = 3;
+  string creationDate = 4;
+  uint32 portalCodeOwner =  5;
+  uint32 portalCodeAssignee =  6;
+  string targetAudience = 7;
+  repeated string equipments = 8;
+  repeated string slots = 9;
+  repeated string bookingIDs = 10;
+}
+
+message UpdateRoomResponse {
+  Room room = 1;
+}
+
+message AddRoomSlotsRequest {
+  repeated Slot slots = 1;
+}
+
+message AddRoomSlotsResponse {
+  repeated string uuids = 1;
+}
+
+message UpdateRoomSlotRequest {
+  RoomSlot slot = 1;
+}
+
+message UpdateRoomSlotResponse {
+  RoomSlot slot = 1;
+}
+
+message AddRoomEquipmentsRequest {
+  repeated Equipment equipments = 1;
+}
+
+message AddRoomEquipmentsResponse {
+  repeated string uuids = 1;
+}
+
+message UpdateRoomEquipmentRequest {
+  RoomEquipment equipment = 1;
+}
+
+message UpdateRoomEquipmentResponse {
+  RoomEquipment equipment = 1;
+}
+
+message GetRoomsRequest {
+  uint32 limit = 1;
+  uint32 offset = 2;
+  string query = 3;
+  RoomFilter filter = 4;
+  RoomSorting sorting = 5;
+}
+
+message GetRoomsResponse {
+  repeated Room rooms = 1;
+  uint32 count = 2;
+}
+
+message GetRoomRequest {
+  string id = 1;
+}
+
+message GetRoomResponse {
+  Room room = 1;
+}
+
+message ChangeRoomStatusRequest {
+  string id = 1;
+  AddressStatus status = 2;
+}
+
+message RemoveRoomSlotRequest {
+  string uuid = 1;
+}
+
+message RemoveRoomEquipmentRequest {
+  string uuid = 1;
+}
+
+message AddReleaseRequest {
+  repeated Release releases = 1;
+}
+
+message AddReleaseResponse {
+  repeated string uuids = 1;
+}
+
+message PrepareReportDataRequest {
+  Timeline timeline = 1;
+  string roomID = 2;
+}
+
+message PrepareReportDataResponse {
+  repeated Release releases = 1;
+  repeated RoomSlot slots = 2;
+  repeated RoomEquipment equipments = 3;
+}
+
+message RoomFilter {
+  bool CreatedByMe = 1; // current_user=supervisor
+  bool AwaitsMe = 2; 
+  Timeline created_at = 3;
+  Timeline creation_date = 4;
+  repeated AddressStatus status = 5;
+  repeated uint32 portal_code_owners = 6;
+  repeated uint32 portal_code_employees = 7;
+}
+
+message UpdateReleaseRequest {
+    Release release = 1;
+}
+
+message UpdateReleaseResponse {
+  Release release = 1;
+}
+
+message RemoveReleaseRequest {
+  string uuid = 1;
+}
+
+message RemoveReleaseResponse {
+  string uuid = 1;
+}
+
+message RoomSorting {
+  enum TYPE_SORTING {
+    BY_PUBLISH_DATE = 0;
+    BY_CREATION_DATE_DATE = 1;
+  }
+
+  TYPE_SORTING type = 1;
+  bool asc = 2;
+}
+
+message SetRoomArchivedRequest {
+  string roomID = 1;
+}
+
+message SetRoomPublishedRequest {
+  string roomID = 1;
+}

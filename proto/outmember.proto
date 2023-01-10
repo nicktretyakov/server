@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "user.proto";
+
+message Outmember {
+  string id = 1;
+  ObjectType object = 2;
+  string created_at = 3;
+  bool result = 4;
+  Comment comment = 5;
+}
+
+message Comment {
+  User user = 1;
+  Role role = 2;
+  string extra = 3;
+}
+
+enum ObjectType {
+  OUTMEMBER_TYPE_UNKNOWN = 0;
+  OUTMEMBER_TYPE_INITIAL = 1; // Старт 
+  OUTMEMBER_TYPE_FINAL = 2; // Принятие 
+  OUTMEMBER_TYPE_APPROVAL = 3; // согласующим
+  OUTMEMBER_TYPE_FINAL_CONFIRMATION = 4; //финализация
+}
+
+enum Role {
+  ROLE_UNKNOWN = 0;
+  ROLE_BOOKING_MANAGER = 1;
+  ROLE_ASSIGNEE = 2;
+}

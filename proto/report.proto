@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package booking;
+
+import "dictionary_service.proto";
+
+option go_package = "./;proto";
+
+message BookingReport {
+  string id = 1;
+  ReportPeriod report_period  = 2;
+  Notification slot = 3;
+  string end_date = 4;
+  string events = 5;
+  string reasons = 8;
+  string comment = 9;
+  ReportStatus status = 10;
+}
+
+message ReportPeriod {
+  int32 month = 1;
+  int32 year = 2;
+}
+
+enum ReportStatus {
+  UNKNOWN_REPORT_STATUS = 0;
+  NOT_SEND = 1; // Неотправлен
+  SEND = 2; // Отправлен
+}

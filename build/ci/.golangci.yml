@@ -1,0 +1,115 @@
+run:
+  concurrency: 5
+  deadline: 5m
+  issues-exit-code: 1
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters-settings:
+  gomnd:
+    settings:
+      mnd:
+        checks: argument,case,condition,operation,return,assign
+        ignored-numbers: 2,10,64
+  goimports:
+    local-prefixes: gitlab.tn.ru/miniapps/booking/backend
+  gocyclo:
+    min-complexity: 10
+  gocognit:
+    min-complexity: 10
+  lll:
+    line-length: 140
+  tagliatelle:
+    case:
+      rules:
+        # support string case: `camel`, `pascal`, `kebab`, `snake`, `goCamel`, `goPascal`, `goKebab`, `goSnake`, `upper`, `lower`
+        json: snake
+        yaml: snake
+        xml: snake
+        bson: snake
+        avro: snake
+        mapstructure: snake
+
+
+linters:
+  enable:
+    - asciicheck
+    - bodyclose
+    - cyclop
+    - depguard
+    - dogsled
+    - dupl
+    - durationcheck
+    - errcheck
+    - exhaustive
+    - exportloopref
+    - forbidigo
+    - forcetypeassert
+    - funlen
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - gomnd
+    - gomodguard
+    - goprintffuncname
+    - gosec
+    - govet
+    - importas
+    - ineffassign
+    - makezero
+    - megacheck
+    - misspell
+    - nakedret
+    - nestif
+    - nilerr
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    # - revive # do not use
+    - rowserrcheck
+    - sqlclosecheck
+    - stylecheck
+    - tagliatelle
+    - testpackage
+    - thelper
+    - typecheck
+    - unconvert
+    - unparam
+    - wastedassign
+    - whitespace
+    - wsl
+    - lll
+    - funlen
+  fast: false
+  disable-all: true
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - gochecknoglobals
+        - wsl
+        - funlen
+        - bodyclose
+    - text: "Errors unhandled"
+      linters:
+        - gosec
+    - linters:
+        - lll
+      source: "^//go:generate "

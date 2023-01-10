@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "address.proto";
+
+service Note {
+  rpc GetNoteSettings(GetNoteSettingsRequest) returns (GetNoteSettingsResponse) {}
+  rpc SetNoteSettings(SetNoteSettingsRequest) returns (SetNoteSettingsResponse) {}
+  rpc GetNotesCount(GetNotesCountRequest) returns (GetNotesCountResponse) {}
+  rpc GetNotes(GetNotesRequest) returns (GetNotesResponse) {}
+  rpc ReadNotes(ReadNotesRequest) returns (ReadNotesResponse) {}
+}
+
+message GetNoteSettingsRequest {
+
+}
+
+message GetNoteSettingsResponse {
+  bool is_email_on = 1;
+  bool is_life_on = 2;
+}
+
+message SetNoteSettingsRequest {
+  enum TYPE_NOTE {
+    EMAIL = 0;
+    LIFE = 1;
+  }
+
+  TYPE_NOTE type = 1;
+  bool is_on = 2;
+}
+
+message SetNoteSettingsResponse {
+
+}
+
+message GetNotesCountRequest {
+
+}
+
+message GetNotesCountResponse {
+  int64 count = 1;
+}
+
+message GetNotesRequest {
+  STATUS_NOTE type = 1;
+  uint32 limit = 2;
+  uint32 offset = 3;
+  NoteSorting sorting = 4;
+}
+
+message NoteSorting {
+  enum TYPE_SORTING {
+    BY_CREATED_AT = 0;
+    BY_READ_AT = 1;
+  }
+
+  TYPE_SORTING type = 1;
+  bool asc = 2;
+}
+
+message GetNotesResponse {
+  repeated SystemNote notes = 1;
+}
+
+message ReadNotesRequest {
+  repeated string ids = 1;
+}
+
+message ReadNotesResponse {
+
+}
+
+enum STATUS_NOTE {
+  READ = 0;
+  NOT_READ = 1;
+}
+
+message SystemNote {
+  string id = 1;
+  STATUS_NOTE status = 2;
+  string address_id = 3;
+  AddressType address_type = 4;
+  string header = 5;
+  string body = 6;
+  string read_at = 7;
+  string created_at = 8;
+}

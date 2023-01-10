@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "booking.proto";
+import "room.proto";
+import "user.proto";
+import "outmember.proto";
+
+service OutmemberService {
+  // Принятие
+  rpc AcceptBookingAsRegister (BookingRequest) returns (BookingResponse) {}
+  rpc DeclineBookingAsRegister (BookingRequest) returns (BookingResponse) {}
+  // Согласование
+  rpc AcceptBookingAsAssignee (BookingRequest) returns (BookingResponse) {}
+  rpc DeclineBookingAsAssignee (BookingRequest) returns (BookingResponse) {}
+  
+  rpc AcceptRoomAsRegister (RoomRequest) returns (RoomResponse) {}
+  rpc DeclineRoomAsRegister (RoomRequest) returns (RoomResponse) {}
+  // Согласование
+  rpc AcceptRoomAsAssignee (RoomRequest) returns (RoomResponse) {}
+  rpc DeclineRoomAsAssignee (RoomRequest) returns (RoomResponse) {}
+  // Регистрация
+  rpc AcceptFinalReportAsRegister (FinalReportRequest) returns (FinalReportResponse) {}
+  rpc DeclineFinalReportAsRegister (FinalReportRequest) returns (FinalReportResponse) {}
+  // Согласование
+  rpc AcceptFinalReportAsAssignee (FinalReportRequest) returns (FinalReportResponse) {}
+  rpc DeclineFinalReportAsAssignee (FinalReportRequest) returns (FinalReportResponse) {}
+}
+
+// Запроса хендлера Agree
+message BookingRequest {
+  // UUID 
+  string bookingID = 1;
+  string comment = 2;
+}
+
+// Ответа хендлера Agree
+message BookingResponse {
+  // Booking
+  Booking booking = 1;
+}
+
+message FinalReportRequest {
+  string final_report_id = 1;
+  string comment = 2;
+}
+
+message FinalReportResponse {
+  Booking booking = 1;
+  User user = 2;
+  Role role = 3;
+}
+
+message RoomRequest {
+  string roomID = 1;
+  string comment = 2;
+}
+
+message RoomResponse {
+  Room room = 1;
+}

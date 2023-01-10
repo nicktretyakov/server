@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "google/protobuf/empty.proto";
+
+service Auth {
+  rpc AuthURL(google.protobuf.Empty) returns (AuthURLResponse) {}
+  rpc AuthByCode(AuthByCodeRequest) returns (AuthByCodeResponse) {}
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {}
+}
+
+message AuthURLResponse {
+  string auth_url = 1;
+}
+
+message AuthByCodeRequest {
+  string code = 1;
+}
+
+message AuthByCodeResponse {
+  string access = 1;
+  string refresh = 2;
+}
+
+message RefreshTokenRequest {
+  string refresh = 1;
+}
+
+message RefreshTokenResponse {
+  string access = 1;
+  string refresh = 2;
+}

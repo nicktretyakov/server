@@ -1,0 +1,8 @@
+.idea
+.build
+out/
+.cov
+coverage.html
+test/mocks/*
+.DS_Store
+.idea

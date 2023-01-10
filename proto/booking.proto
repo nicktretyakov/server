@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "user.proto";
+import "dictionary_service.proto";
+import "outmember.proto";
+import "final_report.proto";
+import "report.proto";
+import "address.proto";
+
+message Booking {
+  string uuid = 1;
+  string title = 2;
+  string description = 3;
+  string createdAt = 4;
+  string updatedAt = 5;
+  AddressStatus status = 7;
+  User assignee = 8; //Согласующий
+  User author = 9; //Автор
+  repeated Participant participants = 10;
+  repeated Outmember outmembers = 11;
+  repeated Link links = 12;
+  repeated Attachment attachments = 13;
+  uint64 number = 14;
+
+  BookingType type = 15;
+  string city = 16;
+  Timeline timeline = 17;
+  string goal = 18; //target
+  User supervisor = 19; //Руководитель
+  repeated Department department = 20;
+  FinalReport final_report = 21;
+  //stages
+  repeated BookingReport reports = 22;
+  Notification slot = 23;
+  AddressState state = 24;
+}
+
+enum BookingType {
+  UNKNOWN_TYPE = 0;
+  INVEST = 1;
+  ORGANIZATIONAL = 2;
+}
+
+enum SortType {
+  BY_PUBLISH_DATE = 0;
+  BY_END_DATE = 1;
+  BY_SLOT = 2;
+}

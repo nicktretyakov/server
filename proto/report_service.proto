@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "report.proto";
+import "room.proto";
+import "dictionary_service.proto";
+import "address.proto";
+
+service ReportService {
+  rpc SendBookingReport (SendBookingReportRequest) returns (SendBookingReportResponse) {}
+  rpc SendRoomReport (SendRoomReportRequest) returns (ReportRoomResponse) {}
+  rpc GetRoomReport (GetRoomReportRequest) returns (ReportRoomResponse) {}
+}
+
+message SendBookingReportRequest {
+  string id = 1;
+  Notification slot = 3;
+  string end_date = 4;
+  string events = 5;
+  string reasons = 8;
+  string comment = 9;
+}
+
+message SendBookingReportResponse {
+  BookingReport report = 1;
+}
+
+message SendRoomReportRequest {
+  string roomID = 1;
+  Timeline timeline = 2;
+  string comment = 3;
+  repeated string slotsID = 4;
+  repeated string equipmentsID = 5;
+  repeated string releasesID = 6;
+}
+
+message ReportRoomResponse {
+  RoomReport roomReport = 1;
+}
+
+message GetRoomReportRequest {
+  string reportID = 1;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+message User {
+  string uuid = 1;
+  string profileId = 2;
+  string email = 3;
+  string phone = 4;
+  Employee employee = 5;
+}
+
+message Employee {
+  string name = 1;
+  string middlename = 2;
+  string lastname = 3;
+  string avatar = 4;
+  string email = 5;
+  string phone = 6;
+  uint32 portalcode = 7;
+  string position = 8;
+}
+
+message Participant {
+  User participant = 1;
+  string role = 2;
+}

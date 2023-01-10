@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+enum AddressStatus {
+  ADDRESS_STATUS = 0;
+  INITIAL = 1; // Начальный
+  DECLINED = 2; // Отклонен
+  ON_REGISTRATION = 3; //На регистрации
+  CONFIRMED = 4; // Утвержден
+  DONE = 5; // Завершен
+  ON_AGREE = 6; // На согласовании
+  FINALIZE_ON_REGISTRATION = 7; // Завершение
+  FINALIZE_ON_AGREE = 8; // Завершение согласуется
+  FINALIZE_DECLINED = 9; // завершение
+}
+
+enum AddressType {
+  UNKNOWN_OBJECT = 0;
+  BOOKING = 1;
+  ROOM = 2;
+}
+
+enum AddressState {
+  UNKNOWN_STATE = 0;
+  PUBLISHED = 1;
+  ARCHIVED = 2;
+}
+
+message Attachment {
+  string id = 1;
+  string url = 2;
+  string fileName = 3;
+  uint64 size = 5;
+}
+
+message Timeline {
+  string start = 1;
+  string end = 2;
+}
+
+message Link {
+  string id = 1;
+  string name = 2;
+  string source = 3;
+}

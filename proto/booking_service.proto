@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "booking.proto";
+import "address.proto";
+import "user.proto";
+import "dictionary_service.proto";
+import "google/protobuf/empty.proto";
+
+service BookingService {
+  rpc GetList (GetListRequest) returns (GetListResponse) {}
+  rpc GetArchivedBookings (GetListRequest) returns (GetListResponse) {}
+  rpc CreateInitialBooking (CreateInitialBookingRequest) returns (CreateInitialBookingResponse) {}
+  rpc UpdateBooking (UpdateBookingRequest) returns (UpdateBookingResponse) {}
+  rpc GetBooking (GetBookingRequest) returns (GetBookingResponse) {}
+  rpc ChangeBookingStatus (ChangeBookingStatusRequest) returns (GetBookingResponse) {}
+  rpc SuggestSupervisor (google.protobuf.Empty) returns (SuggestSupervisorResponse) {}
+  rpc SetBookingArchived (SetBookingArchivedRequest) returns (google.protobuf.Empty) {}
+  rpc SetBookingPublished (SetBookingPublishedRequest) returns (google.protobuf.Empty) {}
+}
+
+message GetListRequest {
+  uint32 limit = 1;
+  uint32 offset = 2;
+  string query = 3;
+  Filter filter = 4;
+  Sorting sorting = 5;
+}
+
+message GetListResponse {
+  repeated Booking bookings = 1;
+  uint32 count = 2;
+}
+
+// Запроса хендлера nextStepOne
+message CreateInitialBookingRequest {
+  // Тип 
+  BookingType type = 1;
+  // Название 
+  string title = 2;
+  // Срок 
+  Timeline timeline = 3;
+  // Описание 
+  string description = 4;
+  // Руководитель
+  uint32 portalCodeSupervisor =  5;
+}
+
+// Ответ хендлера nextStepOne
+message CreateInitialBookingResponse {
+  Booking booking = 1;
+}
+
+message UpdateBookingRequest {
+  string id = 1;
+  Notification slot = 2;
+  string goal = 4;
+  repeated string departments = 6;
+  BookingType type = 7;
+  string title = 8;
+  Timeline timeline = 9;
+  string description = 10;
+  string city = 11;
+  uint32 portalCodeSupervisor =  12;
+  uint32 portalCodeAssignee =  13;
+}
+
+message BookingLinks{
+  repeated Link links = 1;
+}
+
+message UpdateBookingResponse {
+  Booking booking = 1;
+}
+
+message ChangeBookingStatusRequest {
+  string id = 1;
+  AddressStatus status = 2;
+}
+
+message GetBookingRequest {
+  string id = 1;
+}
+
+message GetBookingResponse {
+  Booking booking = 1;
+}
+
+message Filter {
+  repeated AddressStatus status = 1;
+  Timeline timelineFinish = 2; //окончание 
+  bool CreatedByMe = 3; //добавляет фильтр
+  bool AwaitsMe = 4; //фильтр 
+  FilterSlot slot = 5;
+  repeated Department department = 8;
+  repeated uint32 portal_code_supervisors = 9;
+}
+
+message Sorting {
+  SortType type = 1;
+  bool asc = 2;
+}
+
+message FilterSlot {
+  Notification slotFrom = 1;
+  Notification slotTo = 2;
+}
+
+message SuggestSupervisorResponse {
+  repeated User users = 1;
+}
+
+message SetBookingArchivedRequest {
+  string bookingID = 1;
+}
+
+message SetBookingPublishedRequest {
+  string bookingID = 1;
+}

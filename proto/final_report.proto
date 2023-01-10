@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "dictionary_service.proto";
+import "address.proto";
+
+service FinalReportService {
+  rpc SendReport (SendFinalReportRequest) returns (SendFinalReportResponse) {}
+}
+
+message SendFinalReportRequest {
+  string booking_id = 1; //ID
+  booking.Notification slot = 2;
+  string end_date = 3;
+  string comment = 4;
+  repeated string attachment_id = 5;
+}
+
+message SendFinalReportResponse {
+  FinalReport report = 1;
+  AddressStatus booking_status = 2;
+}
+
+message FinalReport {
+  string id = 1;
+  booking.Notification slot = 2;
+  string end_date = 3;
+  string comment = 4;
+  FinalReportStatus status = 5;
+  repeated Attachment attachments = 6;
+}
+
+enum FinalReportStatus {
+  FINAL_REPORT_UNKNOWN_STATUS = 0;
+  FINAL_REPORT_INITIAL = 1; // Начальный
+  FINAL_REPORT_DECLINED = 2; // Отклонен в доработке
+  FINAL_REPORT_ON_REGISTER = 3; // На регистрации
+  FINAL_REPORT_CONFIRMED = 4; // Утвержден
+  FINAL_REPORT_ON_AGREE = 5; // На согласовании
+}

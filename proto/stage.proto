@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "./;proto";
+
+import "user.proto";
+import "address.proto";
+
+message Stage {
+  string uuid = 1;
+  string title = 2;
+  Timeline timeline = 4;
+  repeated Issue issues = 5;
+}
+
+message Issue {
+  string id = 1;
+  string stage_id = 2;
+  string title = 3;
+  string description = 4;
+  Timeline timeline = 5;
+  repeated User participants = 6;
+  repeated Attachment attachments = 7;
+}
