@@ -72,7 +72,7 @@
 | TN_ENABLE_CREATE_NOTIFICATIONS              | Включено ли создание уведомлений                      |           | true                                |
 | TN_SEND_EMAIL_NOTIFICATIONS_PERIOD          | Период отправки email уведомлений                     |           | 10m                                 |
 | TN_SEND_LIFE_NOTIFICATIONS_PERIOD           | Период отправки life уведомлений                      |           | 10m                                 |
-| TN_URL_BASE_NOTIFICATION                    | URL адрес для формирования ссылки на проект/продукт   |           | https://tn-office-dev.tages.dev     |
+| TN_URL_BASE_NOTIFICATION                    | URL адрес для формирования ссылки на проект/продукт   |           |      |
 | TN_BOOKING_VIEW_FRONT_ROUTE_NOTIFICATION    | Фронтовый роут для бронирований                           |           | /booking/[[uuid]]                   |
 | TN_ROOM_VIEW_FRONT_ROUTE_NOTIFICATION    | Фронтовый роут для комнат                          |           | /room/[[uuid]]                   |
 | TN_BOT_API_URL                              | URL адрес api бота                                    |           |                                     |
